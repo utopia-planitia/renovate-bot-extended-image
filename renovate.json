@@ -1,0 +1,18 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "pinDigests": true,
+  "regexManagers": [
+    {
+      "fileMatch": [
+        "^Dockerfile$"
+      ],
+      "matchStrings": [
+        "ENV MSORT_VERSION=(?<currentValue>.*?)\n"
+      ],
+      "depNameTemplate": "utopia-planitia/msort",
+      "datasourceTemplate": "github-tags"
+    }
+  ]
+}
