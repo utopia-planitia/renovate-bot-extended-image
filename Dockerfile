@@ -18,3 +18,4 @@ RUN curl --version
 RUN jq --version
 RUN yq --version
 RUN go version
+RUN renovate --version
