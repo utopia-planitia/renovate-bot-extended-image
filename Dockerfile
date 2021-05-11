@@ -1,4 +1,4 @@
-FROM renovate/renovate:25.18.5@sha256:5ebc2f6e69e7f106e0df758897cc92463ce465eaea0b15b607c9e8c2842e4e25
+FROM renovate/renovate:25.18.5@sha256:22af7ef206b493f4276bffe3baace851b1616fe536060387d984f263cdb6d69c
 
 USER root
 
