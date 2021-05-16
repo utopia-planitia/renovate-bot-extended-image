@@ -4,14 +4,10 @@ FROM golang:1.16.4-buster@sha256:ab32429d40c1b734ed4f036838ac516352182f941456347
 RUN git clone --depth 1 https://github.com/kubernetes/kubernetes.git -b v1.21.0
 RUN cd kubernetes && go install ./cmd/kubectl-convert
 
-ENV MSORT_VERSION=v0.1.0
-RUN go install github.com/utopia-planitia/msort@${MSORT_VERSION}
-
 # renovate
 FROM renovate/renovate:25.21.10@sha256:59040140b40a60ba0598ce1891b11db76575e99aa1fd9f29bf7cdd7784013f34
 
 COPY --from=golang /go/bin/kubectl-convert /go/bin/kubectl-convert
-COPY --from=golang /go/bin/msort /go/bin/msort
 
 USER root
 
@@ -49,4 +45,3 @@ RUN ssh-keyscan gitlab.com
 RUN helm version
 RUN helmfile version
 RUN kustomize version
-RUN msort --help

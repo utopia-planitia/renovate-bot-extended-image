@@ -10,16 +10,6 @@
         "^Dockerfile$"
       ],
       "matchStrings": [
-        "ENV MSORT_VERSION=(?<currentValue>.*?)\n"
-      ],
-      "depNameTemplate": "utopia-planitia/msort",
-      "datasourceTemplate": "github-tags"
-    },
-    {
-      "fileMatch": [
-        "^Dockerfile$"
-      ],
-      "matchStrings": [
         "ENV HELMFILE_VERSION=(?<currentValue>.*?)\n"
       ],
       "depNameTemplate": "roboll/helmfile",
