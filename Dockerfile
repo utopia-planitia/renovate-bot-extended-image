@@ -1,17 +1,43 @@
-FROM renovate/renovate:25.21.10@sha256:59040140b40a60ba0598ce1891b11db76575e99aa1fd9f29bf7cdd7784013f34
+# kubectl-convert
+FROM golang:1.16.4-buster@sha256:ab32429d40c1b734ed4f036838ac516352182f9414563478fa88a1553c4a4414 AS golang
 
-USER root
-
-RUN apt update
-
-RUN apt install -y curl jq
-
-RUN pip3 install yq
-
-USER ubuntu
+RUN git clone --depth 1 https://github.com/kubernetes/kubernetes.git -b v1.21.0
+RUN cd kubernetes && go install ./cmd/kubectl-convert
 
 ENV MSORT_VERSION=v0.1.0
 RUN go install github.com/utopia-planitia/msort@${MSORT_VERSION}
+
+# renovate
+FROM renovate/renovate:25.21.10@sha256:59040140b40a60ba0598ce1891b11db76575e99aa1fd9f29bf7cdd7784013f34
+
+COPY --from=golang /go/bin/kubectl-convert /go/bin/kubectl-convert
+COPY --from=golang /go/bin/msort /go/bin/msort
+
+USER root
+
+RUN apt-get update \
+ && apt-get install -y ca-certificates
+
+RUN update-ca-certificates
+
+# vum ex curl jq
+RUN apt install -y vim curl jq
+
+# yq
+RUN pip3 install yq
+
+# helmfile
+ENV HELMFILE_VERSION=v0.139.5
+RUN curl -fsSL -o /usr/local/bin/helmfile https://github.com/roboll/helmfile/releases/download/${HELMFILE_VERSION}/helmfile_linux_amd64 && \
+    chmod +x /usr/local/bin/helmfile
+
+# kustomize
+ENV KUSTOMIZE_VERSION=4.1.2
+RUN curl -fsSL -o /usr/local/bin/install_kustomize.sh https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh && \
+    chmod +x /usr/local/bin/install_kustomize.sh && \
+    install_kustomize.sh ${KUSTOMIZE_VERSION} /usr/local/bin/
+
+USER ubuntu
 
 # checks
 RUN curl --version
@@ -19,3 +45,8 @@ RUN jq --version
 RUN yq --version
 RUN go version
 RUN renovate --version
+RUN ssh-keyscan gitlab.com
+RUN helm version
+RUN helmfile version
+RUN kustomize version
+RUN msort --help
