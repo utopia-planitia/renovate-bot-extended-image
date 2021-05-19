@@ -32,7 +32,5 @@
   ],
   "automerge": true,
   "automergeType": "pr",
-  "prConcurrentLimit": 3,
-  "dependencyDashboard": true,
-  "dependencyDashboardAutoclose": true
+  "prConcurrentLimit": 3
 }
