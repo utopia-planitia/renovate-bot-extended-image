@@ -5,7 +5,7 @@ RUN git clone --depth 1 https://github.com/kubernetes/kubernetes.git -b v1.21.0
 RUN cd kubernetes && go install ./cmd/kubectl-convert
 
 # renovate
-FROM renovate/renovate:25.50.0@sha256:2b751dd1bc2b349280d4862ed9e323b2a299cbb486ab8af8e7e58d083564adc3
+FROM renovate/renovate:25.50.0@sha256:9c76dc9a5ff495453f447d4e66b56ee1ebe4f9ddf735e07ec0997a338d63e35b
 
 COPY --from=golang /go/bin/kubectl-convert /go/bin/kubectl-convert
 
