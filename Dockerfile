@@ -1,5 +1,5 @@
 # kubectl-convert
-FROM golang:1.16.5-buster@sha256:a965f28fa0dd69cc91d3ec65bc4e75721b0280d3dff9268b953caa3c141a0ed9 AS golang
+FROM golang:1.16.5-buster@sha256:4c03f97f3e6253d0c3e8e3a2b2dc44f270a96eb5f1dbffd5c6e86e453fffb9d5 AS golang
 
 RUN git clone --depth 1 https://github.com/kubernetes/kubernetes.git -b v1.21.0
 RUN cd kubernetes && go install ./cmd/kubectl-convert
