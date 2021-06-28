@@ -6,4 +6,9 @@ This image extends the renovate bot image with tools used by post upgrade comand
 - curl
 - jq
 - yq
-- msort
+- chart-prettier
+- kubectl-convert
+- helmfile
+- kustomize
+- golang
+- helm

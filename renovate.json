@@ -24,6 +24,16 @@
       ],
       "depNameTemplate": "kubernetes-sigs/kustomize",
       "datasourceTemplate": "github-tags"
+    },
+    {
+      "fileMatch": [
+        "^Dockerfile$"
+      ],
+      "matchStrings": [
+        "ENV CHART_PRETTIER_VERSION=(?<currentValue>.*?)\n"
+      ],
+      "depNameTemplate": "utopia-planitia/chart-prettier",
+      "datasourceTemplate": "github-tags"
     }
   ],
   "prHourlyLimit": 0,

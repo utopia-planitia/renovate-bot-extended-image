@@ -4,10 +4,14 @@ FROM golang:1.16.5-buster@sha256:4c03f97f3e6253d0c3e8e3a2b2dc44f270a96eb5f1dbffd
 RUN git clone --depth 1 https://github.com/kubernetes/kubernetes.git -b v1.21.0
 RUN cd kubernetes && go install ./cmd/kubectl-convert
 
+ENV CHART_PRETTIER_VERSION=v1.0.0
+RUN go get github.com/utopia-planitia/chart-prettier@${CHART_PRETTIER_VERSION}
+
 # renovate
 FROM renovate/renovate:25.51.4@sha256:41b19dfeead90474db17a86470992419bb98ba34d5b20416f2c1d121552dc053
 
 COPY --from=golang /go/bin/kubectl-convert /go/bin/kubectl-convert
+COPY --from=golang /go/bin/chart-prettier /go/bin/chart-prettier
 
 USER root
 
@@ -45,3 +49,4 @@ RUN ssh-keyscan gitlab.com
 RUN helm version
 RUN helmfile version
 RUN kustomize version
+RUN chart-prettier -h
