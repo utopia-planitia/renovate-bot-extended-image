@@ -8,7 +8,7 @@ ENV CHART_PRETTIER_VERSION=v1.0.0
 RUN go get github.com/utopia-planitia/chart-prettier@${CHART_PRETTIER_VERSION}
 
 # renovate
-FROM renovate/renovate:25.52.2@sha256:3f73a167d4818234da572f9cbc4cda96447fe6f3ffffb4f3b5b4c32220e12759
+FROM renovate/renovate:25.52.3@sha256:bef97ab408a367e9d80980df120d20e2406c50607840c2595d0a1ed8a9723aa0
 
 COPY --from=golang /go/bin/kubectl-convert /usr/local/bin/kubectl-convert
 COPY --from=golang /go/bin/chart-prettier /usr/local/bin/chart-prettier
