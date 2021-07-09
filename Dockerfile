@@ -4,14 +4,11 @@ FROM golang:1.16.5-buster@sha256:4c03f97f3e6253d0c3e8e3a2b2dc44f270a96eb5f1dbffd
 RUN git clone --depth 1 https://github.com/kubernetes/kubernetes.git -b v1.21.0
 RUN cd kubernetes && go install ./cmd/kubectl-convert
 
-ENV CHART_PRETTIER_VERSION=v1.0.1
+ENV CHART_PRETTIER_VERSION=v1.1.0
 RUN go get github.com/utopia-planitia/chart-prettier@${CHART_PRETTIER_VERSION}
 
 # renovate
 FROM renovate/renovate:25.52.9@sha256:4d610c1d5c80491f605fa0e9468da9d8cb34e2387cc4d27d031c59e324aa5909
-
-COPY --from=golang /go/bin/kubectl-convert /usr/local/bin/kubectl-convert
-COPY --from=golang /go/bin/chart-prettier /usr/local/bin/chart-prettier
 
 USER root
 
@@ -36,6 +33,10 @@ ENV KUSTOMIZE_VERSION=4.1.2
 RUN curl -fsSL -o /usr/local/bin/install_kustomize.sh https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh && \
     chmod +x /usr/local/bin/install_kustomize.sh && \
     install_kustomize.sh ${KUSTOMIZE_VERSION} /usr/local/bin/
+
+# compiled tools
+COPY --from=golang /go/bin/kubectl-convert /usr/local/bin/kubectl-convert
+COPY --from=golang /go/bin/chart-prettier /usr/local/bin/chart-prettier
 
 USER ubuntu
 
