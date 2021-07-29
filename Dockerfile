@@ -4,7 +4,7 @@ FROM golang:1.16.6-buster@sha256:f3923dc5a92a237db0f07a924a238a8a4a711e3b77a7b5b
 RUN git clone --depth 1 https://github.com/kubernetes/kubernetes.git -b v1.21.0
 RUN cd kubernetes && go install ./cmd/kubectl-convert
 
-ENV CHART_PRETTIER_VERSION=v1.1.0
+ENV CHART_PRETTIER_VERSION=v1.2.0
 RUN go get github.com/utopia-planitia/chart-prettier@${CHART_PRETTIER_VERSION}
 
 # renovate
