@@ -8,7 +8,7 @@ ENV CHART_PRETTIER_VERSION=v1.2.0
 RUN go get github.com/utopia-planitia/chart-prettier@${CHART_PRETTIER_VERSION}
 
 # renovate
-FROM renovate/renovate:25.69.1@sha256:c5f8088a5642e0613071b731c77f003ec1b4a4da467f133ab8682a4c944c4cc7
+FROM renovate/renovate:25.69.2@sha256:dad46cfc1dfab0759f0b0420596ef2b3af50488a5b97ec8ac95737e9b8813ddc
 
 USER root
 
