@@ -15,6 +15,9 @@ USER root
 
 RUN apt-get update
 
+# gofmt
+RUN ln -s /usr/local/buildpack/go/1.17.6/bin/gofmt /usr/local/bin/gofmt
+
 # vum ex curl jq
 RUN apt install -y vim curl jq
 
@@ -49,3 +52,4 @@ RUN helm version
 RUN helmfile version
 RUN kustomize version
 RUN chart-prettier -h
+RUN which gofmt
