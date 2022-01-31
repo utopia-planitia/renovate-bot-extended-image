@@ -30,6 +30,16 @@
         "^Dockerfile$"
       ],
       "matchStrings": [
+        "ENV KUBERNETES_VERSION=(?<currentValue>.*?)\n"
+      ],
+      "depNameTemplate": "kubernetes/kubernetes",
+      "datasourceTemplate": "github-tags"
+    },
+    {
+      "fileMatch": [
+        "^Dockerfile$"
+      ],
+      "matchStrings": [
         "ENV CHART_PRETTIER_VERSION=(?<currentValue>.*?)\n"
       ],
       "depNameTemplate": "utopia-planitia/chart-prettier",

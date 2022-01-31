@@ -1,7 +1,8 @@
 # kubectl-convert
 FROM golang:1.17.6-buster@sha256:a5ba2c081bc7174317ce7f54cf5689c2365454b11a5e271a911d6a2edec1163d AS golang
 
-RUN git clone --depth 1 https://github.com/kubernetes/kubernetes.git -b v1.21.0
+ENV KUBERNETES_VERSION=v1.23.3
+RUN git clone --depth 1 https://github.com/kubernetes/kubernetes.git -b ${KUBERNETES_VERSION}
 RUN cd kubernetes && go install ./cmd/kubectl-convert
 
 ENV CHART_PRETTIER_VERSION=v1.2.2
