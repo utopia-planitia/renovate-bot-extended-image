@@ -12,10 +12,7 @@ FROM renovate/renovate:31.63.2@sha256:52abe427c043803b01a82df2d0cde50600ef593597
 
 USER root
 
-RUN apt-get update \
- && apt-get install -y ca-certificates
-
-RUN update-ca-certificates
+RUN apt-get update
 
 # vum ex curl jq
 RUN apt install -y vim curl jq
