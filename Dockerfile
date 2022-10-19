@@ -1,5 +1,6 @@
 # kubectl-convert
 FROM golang:1.19.2-buster@sha256:403f38941d7643bc91fad0227ebee6ddd80159b79fc339f6702271a2679a5f11 AS golang
+SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
 
 ENV KUBERNETES_VERSION=v1.25.3
 RUN git clone --depth 1 https://github.com/kubernetes/kubernetes.git -b ${KUBERNETES_VERSION}
@@ -11,6 +12,7 @@ RUN set -eux; \
 
 # renovate
 FROM renovate/renovate:32.240.5@sha256:6f43094224d1ed586ec735b6b3ec4b0eeaf0fc3acf6221d580fd76292b98d23e
+SHELL [ "/usr/bin/bash", "-o", "pipefail", "-c" ]
 
 USER root
 
