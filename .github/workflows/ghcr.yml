@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@7884fcad6b5d53d10323aee724dc68d8b9096a2e # tag=v2
+        uses: actions/checkout@e2f20e631ae6d7dd3b768f56a5d2af784dd54791 # tag=v2
 
       - name: Log in to the Container registry
         uses: docker/login-action@dd4fa0671be5250ee6f50aedf4cb05514abda2c7 # tag=v1
