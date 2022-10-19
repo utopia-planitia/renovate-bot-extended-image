@@ -27,7 +27,7 @@ RUN apt install -y vim curl jq
 RUN pip3 install yq
 
 # helmfile
-ENV HELMFILE_VERSION=v0.143.0
+ENV HELMFILE_VERSION=v0.144.0
 RUN curl -fsSL -o /usr/local/bin/helmfile https://github.com/roboll/helmfile/releases/download/${HELMFILE_VERSION}/helmfile_linux_amd64 && \
     chmod +x /usr/local/bin/helmfile
 
