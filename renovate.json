@@ -52,5 +52,6 @@
   ],
   "automerge": true,
   "automergeType": "pr",
+  "platformAutomerge": true,
   "prConcurrentLimit": 3
 }
