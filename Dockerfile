@@ -16,7 +16,9 @@ USER root
 RUN apt-get update
 
 # gofmt
-RUN ln -s /usr/local/buildpack/go/1.17.6/bin/gofmt /usr/local/bin/gofmt
+RUN set -eux; \
+    ln -s "$(find /usr/local -type f -executable -name gofmt -print -quit 2>/dev/null)" /usr/local/bin/gofmt; \
+    /usr/local/bin/gofmt -h
 
 # vum ex curl jq
 RUN apt install -y vim curl jq
