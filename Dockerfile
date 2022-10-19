@@ -18,7 +18,7 @@ RUN apt-get update
 
 # gofmt
 RUN set -eux; \
-    ln -s "$(find /usr/local -type f -executable -name gofmt -print -quit 2>/dev/null)" /usr/local/bin/gofmt; \
+    ln -s "$(find / -type f -executable -name gofmt -print -quit 2>/dev/null)" /usr/local/bin/gofmt; \
     which gofmt | tee /dev/stderr | grep -Fqx /usr/local/bin/gofmt; \
     gofmt -h
 
