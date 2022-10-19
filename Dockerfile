@@ -18,7 +18,8 @@ RUN apt-get update
 # gofmt
 RUN set -eux; \
     ln -s "$(find /usr/local -type f -executable -name gofmt -print -quit 2>/dev/null)" /usr/local/bin/gofmt; \
-    /usr/local/bin/gofmt -h
+    which gofmt | tee /dev/stderr | grep -Fqx /usr/local/bin/gofmt; \
+    gofmt -h
 
 # vum ex curl jq
 RUN apt install -y vim curl jq
