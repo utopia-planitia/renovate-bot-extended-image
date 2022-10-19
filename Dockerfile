@@ -6,7 +6,8 @@ RUN git clone --depth 1 https://github.com/kubernetes/kubernetes.git -b ${KUBERN
 RUN cd kubernetes && go install ./cmd/kubectl-convert
 
 ENV CHART_PRETTIER_VERSION=v1.2.2
-RUN go get github.com/utopia-planitia/chart-prettier@${CHART_PRETTIER_VERSION}
+RUN set -eux; \
+    go install "github.com/utopia-planitia/chart-prettier@${CHART_PRETTIER_VERSION:?}"
 
 # renovate
 FROM renovate/renovate:31.74.1@sha256:2de2be8eb9ace4274b12a0a9d82f1168f55b7713b19855f6f544ec6b795e1160
