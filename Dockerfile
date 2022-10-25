@@ -1,5 +1,5 @@
 # kubectl-convert
-FROM golang:1.19.2-buster@sha256:403f38941d7643bc91fad0227ebee6ddd80159b79fc339f6702271a2679a5f11 AS golang
+FROM golang:1.19.2-buster@sha256:afa7136268fc9a2719b9e170fdc5df2d3d0b120fbefabbf7f1b24e124a3b3808 AS golang
 SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
 
 ENV KUBERNETES_VERSION=v1.25.3
