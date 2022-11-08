@@ -11,7 +11,7 @@ RUN set -eux; \
     go install "github.com/utopia-planitia/chart-prettier@${CHART_PRETTIER_VERSION:?}"
 
 # renovate
-FROM renovate/renovate:34.20.0@sha256:7722518e9bafe9f9958c5673731e7d1d2fddd7d2142f3734bbc2f35334db91bc
+FROM renovate/renovate:34.20.4@sha256:e37e1335f75e1e1f23d34acad6318a393421489df357d31387a0fed0b8c11419
 SHELL [ "/usr/bin/bash", "-o", "pipefail", "-c" ]
 
 USER root
