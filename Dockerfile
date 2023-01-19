@@ -3,7 +3,7 @@ FROM golang:1.19.5-buster@sha256:150a98859da4c88935958d21d4fca1c74a139eac88e1eb2
 SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
 ENV CGO_ENABLED=0
 
-ENV KUBERNETES_VERSION=v1.26.0
+ENV KUBERNETES_VERSION=v1.26.1
 RUN git clone --depth 1 https://github.com/kubernetes/kubernetes.git -b ${KUBERNETES_VERSION}
 RUN cd kubernetes && go install ./cmd/kubectl-convert
 
