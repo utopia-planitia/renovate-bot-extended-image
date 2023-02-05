@@ -1,5 +1,5 @@
 # kubectl-convert
-FROM golang:1.20.0-buster@sha256:fc1e0b02674cef154ceca0ba6ca4d3658bd385d5faadecbbd44809727a56329d AS golang
+FROM golang:1.20.0-buster@sha256:4447a7f9a0c84217d2b0a421d5fbf54750e68518493a20e495053b3d99af5d4d AS golang
 SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
 ENV CGO_ENABLED=0
 
