@@ -49,8 +49,7 @@ RUN curl -fsSL -o /usr/local/bin/install_kustomize.sh https://raw.githubusercont
     install_kustomize.sh ${KUSTOMIZE_VERSION} /usr/local/bin/
 
 # compiled tools
-COPY --from=golang /go/bin/kubectl-convert /usr/local/bin/kubectl-convert
-COPY --from=golang /go/bin/chart-prettier /usr/local/bin/chart-prettier
+COPY --from=golang /go/bin/chart-prettier /go/bin/kubectl-convert /usr/local/bin/
 
 USER ubuntu
 
