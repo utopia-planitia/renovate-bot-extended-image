@@ -17,8 +17,6 @@ SHELL [ "/usr/bin/bash", "-o", "pipefail", "-c" ]
 
 USER root
 
-RUN apt-get update
-
 # gofmt
 RUN set -eux; \
     ln -s "$(find / -type f -executable -name gofmt -print -quit 2>/dev/null)" /usr/local/bin/gofmt; \
@@ -26,7 +24,15 @@ RUN set -eux; \
     gofmt -h
 
 # vum ex curl jq
-RUN apt install -y vim curl jq
+RUN set -eux; \
+    apt-get update; \
+    DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes --no-install-recommends \
+        curl \
+        jq \
+        vim \
+        ; \
+    apt-get clean; \
+    rm -fr /var/lib/apt/lists/*
 
 # yq
 RUN pip3 install yq
