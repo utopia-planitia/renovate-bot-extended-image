@@ -5,11 +5,11 @@ ENV CGO_ENABLED=0
 
 ENV KUBERNETES_VERSION=v1.26.1
 RUN git clone --depth 1 https://github.com/kubernetes/kubernetes.git -b ${KUBERNETES_VERSION}
-RUN cd kubernetes && go install ./cmd/kubectl-convert
+RUN cd kubernetes && go install -ldflags '-s -w' ./cmd/kubectl-convert
 
 ENV CHART_PRETTIER_VERSION=v1.2.2
 RUN set -eux; \
-    go install "github.com/utopia-planitia/chart-prettier@${CHART_PRETTIER_VERSION:?}"
+    go install -ldflags '-s -w' "github.com/utopia-planitia/chart-prettier@${CHART_PRETTIER_VERSION:?}"
 
 # renovate
 FROM renovate/renovate:34.132.2@sha256:da66e9df656a54c771b9a4c52049dde9029b4287fc184d83067b70890cea7355
