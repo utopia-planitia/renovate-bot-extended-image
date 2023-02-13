@@ -55,14 +55,16 @@ COPY --from=golang /go/bin/chart-prettier /usr/local/bin/chart-prettier
 USER ubuntu
 
 # checks
-RUN curl --version
-RUN jq --version
-RUN yq --version
-RUN go version
-RUN renovate --version
-RUN ssh-keyscan gitlab.com
-RUN helm version
-RUN helmfile version
-RUN kustomize version
-RUN chart-prettier -h
-RUN which gofmt
+RUN set -eux; \
+    chart-prettier -h; \
+    curl --version; \
+    go version; \
+    gofmt --help; \
+    helm version; \
+    helmfile version; \
+    jq --version; \
+    kubectl-convert --help; \
+    kustomize version; \
+    renovate --version; \
+    ssh-keyscan gitlab.com; \
+    yq --version
