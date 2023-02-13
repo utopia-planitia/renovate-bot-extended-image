@@ -35,7 +35,7 @@ RUN set -eux; \
     rm -fr /var/lib/apt/lists/*
 
 # yq
-RUN pip3 install yq
+RUN pip3 install yq --no-cache-dir
 
 # helmfile
 ENV HELMFILE_VERSION=v0.144.0
