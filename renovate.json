@@ -6,6 +6,7 @@
   "pinDigests": true,
   "regexManagers": [
     {
+      "customType": "regex",
       "fileMatch": [
         "^Dockerfile$"
       ],
@@ -16,6 +17,7 @@
       "datasourceTemplate": "github-tags"
     },
     {
+      "customType": "regex",
       "fileMatch": [
         "^Dockerfile$"
       ],
@@ -26,6 +28,7 @@
       "datasourceTemplate": "github-tags"
     },
     {
+      "customType": "regex",
       "fileMatch": [
         "^Dockerfile$"
       ],
@@ -36,6 +39,7 @@
       "datasourceTemplate": "github-tags"
     },
     {
+      "customType": "regex",
       "fileMatch": [
         "^Dockerfile$"
       ],
