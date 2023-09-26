@@ -4,7 +4,7 @@
     "config:recommended"
   ],
   "pinDigests": true,
-  "regexManagers": [
+  "customManagers": [
     {
       "customType": "regex",
       "fileMatch": [
