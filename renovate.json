@@ -58,5 +58,8 @@
   "automergeType": "pr",
   "platformAutomerge": true,
   "configMigration": true,
-  "prConcurrentLimit": 3
+  "prConcurrentLimit": 3,
+  "separateMinorPatch": true,
+  "separateMajorMinor": true,
+  "separateMultipleMajor": true
 }
