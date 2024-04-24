@@ -12,7 +12,7 @@ RUN set -eux; \
     go install -ldflags '-s -w' "github.com/utopia-planitia/chart-prettier@${CHART_PRETTIER_VERSION:?}"
 
 # renovate
-FROM renovate/renovate:37.321.0-full@sha256:6ea87cc4daeae351c8df7cd007884a8d3153a30b5b26baf02c7ea4d2c1ff355a
+FROM renovate/renovate:37.321.1-full@sha256:bede816b55dcd802cd13f1dec81921aa271c79820c845105bd4d8884b4f66c81
 SHELL [ "/usr/bin/bash", "-o", "pipefail", "-c" ]
 
 USER root
