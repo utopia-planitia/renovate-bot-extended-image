@@ -1,57 +1,74 @@
+FROM docker.io/library/golang:1.22.4-alpine@sha256:ace6cc3fe58d0c7b12303c57afe6d6724851152df55e08057b43990b927ad5e8 AS golang
+SHELL [ "/bin/ash", "-o", "pipefail", "-c" ]
+RUN set -eux; \
+    apk upgrade --no-cache; \
+    apk add --no-cache git
+ENV CGO_ENABLED=0 GOOS=linux
+
 # kubectl-convert
-FROM golang:1.20.5-buster@sha256:eb3f9ac805435c1b2c965d63ce460988e1000058e1f67881324746362baf9572 AS golang
-SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
-ENV CGO_ENABLED=0
+FROM golang AS kubectl-convert
+WORKDIR /kubernetes
+# renovate: datasource=github-tags depName=kubernetes/kubernetes
+ENV KUBERNETES_VERSION=v1.30.2
+RUN set -eux; \
+    git clone --depth 1 https://github.com/kubernetes/kubernetes.git --branch "${KUBERNETES_VERSION:?}" .; \
+    go install -ldflags '-s -w' ./cmd/kubectl-convert
 
-ENV KUBERNETES_VERSION=v1.29.6
-RUN git clone --depth 1 https://github.com/kubernetes/kubernetes.git -b ${KUBERNETES_VERSION}
-RUN cd kubernetes && go install -ldflags '-s -w' ./cmd/kubectl-convert
-
+FROM golang AS chart-prettier
+# renovate: datasource=github-tags depName=utopia-planitia/chart-prettier
 ENV CHART_PRETTIER_VERSION=v1.2.2
 RUN set -eux; \
     go install -ldflags '-s -w' "github.com/utopia-planitia/chart-prettier@${CHART_PRETTIER_VERSION:?}"
 
 # renovate
-FROM renovate/renovate:37.414.1-full@sha256:1ff47e6389c2cc7417733af22c8db2e1919783ce952d4d07baadbc00c1a48494
-SHELL [ "/usr/bin/bash", "-o", "pipefail", "-c" ]
+FROM docker.io/renovate/renovate:37.414.1-full@sha256:1ff47e6389c2cc7417733af22c8db2e1919783ce952d4d07baadbc00c1a48494
+SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
 
-USER root
-
-# gofmt
+# assert that the IDs of the base image's user did not change
 RUN set -eux; \
-    ln -s "$(find / -type f -executable -name gofmt -print -quit 2>/dev/null)" /usr/local/bin/gofmt; \
-    which gofmt | tee /dev/stderr | grep -Fqx /usr/local/bin/gofmt; \
-    gofmt -h
+    test "$(id -u)" -eq '1000'; \
+    test "$(id -g)" -eq '0'
 
-# vum ex curl jq
+USER 0:0
+# renovate: datasource=github-releases depName=helmfile/helmfile
+ENV HELMFILE_VERSION=v0.165.0
+# renovate: datasource=github-releases depName=kubernetes-sigs/kustomize extractVersion=^kustomize/(?<version>v\d+(\.\d+)+)$
+ENV KUSTOMIZE_VERSION=v5.4.2
+# renovate: datasource=github-releases depName=mikefarah/yq
+ENV YQ_VERSION=v4.44.2
 RUN set -eux; \
+    # vum ex curl jq
     apt-get update; \
+    apt-get upgrade --assume-yes; \
     DEBIAN_FRONTEND=noninteractive apt-get install --assume-yes --no-install-recommends \
         curl \
         jq \
         vim \
         ; \
     apt-get clean; \
-    rm -fr /var/lib/apt/lists/*
-
-# yq
-RUN pip3 install yq --no-cache-dir
-
-# helmfile
-ENV HELMFILE_VERSION=v0.144.0
-RUN curl -fsSL -o /usr/local/bin/helmfile https://github.com/roboll/helmfile/releases/download/${HELMFILE_VERSION}/helmfile_linux_amd64 && \
-    chmod +x /usr/local/bin/helmfile
-
-# kustomize
-ENV KUSTOMIZE_VERSION=4.1.2
-RUN curl -fsSL -o /usr/local/bin/install_kustomize.sh https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh && \
-    chmod +x /usr/local/bin/install_kustomize.sh && \
-    install_kustomize.sh ${KUSTOMIZE_VERSION} /usr/local/bin/
+    rm -fr /var/lib/apt/lists/*; \
+    # gofmt
+    ln -s "$(find / -type f -executable -name gofmt -print -quit 2>/dev/null)" /usr/bin/gofmt; \
+    command -v gofmt | tee /dev/stderr | grep -Fqx /usr/bin/gofmt; \
+    gofmt -h; \
+    # yq
+    ARCH="$(go env GOARCH)"; \
+    curl -fsSL -o /usr/bin/yq "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION:?}/yq_linux_${ARCH:?}"; \
+    chmod +x /usr/bin/yq; \
+    # helmfile
+    curl -fsSL -o helmfile.tar.gz "https://github.com/helmfile/helmfile/releases/download/${HELMFILE_VERSION:?}/helmfile_${HELMFILE_VERSION//v}_linux_${ARCH:?}.tar.gz"; \
+    tar xzf helmfile.tar.gz -C /usr/bin helmfile; \
+    rm helmfile.tar.gz; \
+    # kustomize
+    curl -fsSL -o kustomize.tar.gz "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2F${KUSTOMIZE_VERSION:?}/kustomize_${KUSTOMIZE_VERSION:?}_linux_${ARCH:?}.tar.gz"; \
+    tar xzf kustomize.tar.gz -C /usr/bin; \
+    rm -fr kustomize.tar.gz
 
 # compiled tools
-COPY --from=golang /go/bin/chart-prettier /go/bin/kubectl-convert /usr/local/bin/
+COPY --from=chart-prettier /go/bin/chart-prettier /usr/bin/
+COPY --from=kubectl-convert /go/bin/kubectl-convert /usr/bin/
 
-USER ubuntu
+USER 1000:0
 
 # checks
 RUN set -eux; \

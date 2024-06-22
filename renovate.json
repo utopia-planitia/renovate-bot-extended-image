@@ -1,55 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended"
+    "config:best-practices",
+    "customManagers:dockerfileVersions"
   ],
-  "pinDigests": true,
-  "customManagers": [
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "^Dockerfile$"
-      ],
-      "matchStrings": [
-        "ENV HELMFILE_VERSION=(?<currentValue>.*?)\n"
-      ],
-      "depNameTemplate": "roboll/helmfile",
-      "datasourceTemplate": "github-tags"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "^Dockerfile$"
-      ],
-      "matchStrings": [
-        "ENV KUSTOMIZE_VERSION=(?<currentValue>.*?)\n"
-      ],
-      "depNameTemplate": "kubernetes-sigs/kustomize",
-      "datasourceTemplate": "github-tags"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "^Dockerfile$"
-      ],
-      "matchStrings": [
-        "ENV KUBERNETES_VERSION=(?<currentValue>.*?)\n"
-      ],
-      "depNameTemplate": "kubernetes/kubernetes",
-      "datasourceTemplate": "github-tags"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "^Dockerfile$"
-      ],
-      "matchStrings": [
-        "ENV CHART_PRETTIER_VERSION=(?<currentValue>.*?)\n"
-      ],
-      "depNameTemplate": "utopia-planitia/chart-prettier",
-      "datasourceTemplate": "github-tags"
-    }
-  ],
+  "ignorePaths": [],
   "prHourlyLimit": 0,
   "labels": [
     "renovate-bot"
