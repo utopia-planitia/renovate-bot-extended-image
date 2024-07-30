@@ -31,7 +31,7 @@ RUN set -eux; \
 
 USER 0:0
 # renovate: datasource=github-releases depName=helmfile/helmfile
-ENV HELMFILE_VERSION=v0.166.0
+ENV HELMFILE_VERSION=v0.167.0
 # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize extractVersion=^kustomize/(?<version>v\d+(\.\d+)+)$
 ENV KUSTOMIZE_VERSION=v5.4.3
 # renovate: datasource=github-releases depName=mikefarah/yq
