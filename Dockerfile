@@ -21,7 +21,7 @@ RUN set -eux; \
     go install -ldflags '-s -w' "github.com/utopia-planitia/chart-prettier@${CHART_PRETTIER_VERSION:?}"
 
 # renovate
-FROM docker.io/renovate/renovate:38.52.0-full@sha256:197b773ca2a53642975de189e06ec0e924a8ff7abd9f81a9b599bf3299837ea6
+FROM docker.io/renovate/renovate:38.52.1-full@sha256:abc77d417ae1381ae671f9c74ee5e40da63c62c41dccb97438e4edc7ba8c7908
 SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
 
 # assert that the IDs of the base image's user did not change
