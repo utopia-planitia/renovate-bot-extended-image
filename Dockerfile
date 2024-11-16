@@ -35,7 +35,7 @@ ENV HELMFILE_VERSION=v0.169.1
 # renovate: datasource=github-releases depName=kubernetes-sigs/kustomize extractVersion=^kustomize/(?<version>v\d+(\.\d+)+)$
 ENV KUSTOMIZE_VERSION=v5.5.0
 # renovate: datasource=github-releases depName=mikefarah/yq
-ENV YQ_VERSION=v4.44.3
+ENV YQ_VERSION=v4.44.5
 RUN set -eux; \
     # vum ex curl jq
     apt-get update; \
