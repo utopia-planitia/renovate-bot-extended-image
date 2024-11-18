@@ -25,7 +25,7 @@ FROM docker.io/renovate/renovate:39.19.1-full@sha256:c31f882d507f84544852886b3af
 SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
 
 # assert that the IDs of the base image's user did not change
-ARG DEFAULT_USER=1000
+ARG DEFAULT_USER=12021
 ARG DEFAULT_GROUP=0
 RUN set -eux; \
     test "$(id -u)" -eq "${DEFAULT_USER:?}"; \
