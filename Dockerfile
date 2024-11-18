@@ -25,9 +25,11 @@ FROM docker.io/renovate/renovate:38.142.7-full@sha256:d93d19df20901c81855094ad4c
 SHELL [ "/bin/bash", "-o", "pipefail", "-c" ]
 
 # assert that the IDs of the base image's user did not change
+ARG DEFAULT_USER=1000
+ARG DEFAULT_GROUP=0
 RUN set -eux; \
-    test "$(id -u)" -eq '1000'; \
-    test "$(id -g)" -eq '0'
+    test "$(id -u)" -eq "${DEFAULT_USER:?}"; \
+    test "$(id -g)" -eq "${DEFAULT_GROUP:?}"
 
 USER 0:0
 # renovate: datasource=github-releases depName=helmfile/helmfile
@@ -68,7 +70,7 @@ RUN set -eux; \
 COPY --from=chart-prettier /go/bin/chart-prettier /usr/bin/
 COPY --from=kubectl-convert /go/bin/kubectl-convert /usr/bin/
 
-USER 1000:0
+USER "${DEFAULT_USER:?}:${DEFAULT_GROUP:?}"
 
 # checks
 RUN set -eux; \
