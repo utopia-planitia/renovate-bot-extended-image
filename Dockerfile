@@ -1,4 +1,4 @@
-FROM docker.io/library/golang:1.23.3-alpine@sha256:c694a4d291a13a9f9d94933395673494fc2cc9d4777b85df3a7e70b3492d3574 AS golang
+FROM docker.io/library/golang:1.23.4-alpine@sha256:9bfa54e3a85920df66ecf1c4979dfdf88baa80ca9752adda442713863087ef18 AS golang
 SHELL [ "/bin/ash", "-o", "pipefail", "-c" ]
 RUN set -eux; \
     apk upgrade --no-cache; \
