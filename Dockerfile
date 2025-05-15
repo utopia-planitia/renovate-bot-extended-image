@@ -9,7 +9,7 @@ ENV CGO_ENABLED=0 GOOS=linux
 FROM golang AS kubectl-convert
 WORKDIR /kubernetes
 # renovate: datasource=github-tags depName=kubernetes/kubernetes
-ENV KUBERNETES_VERSION=v1.33.0
+ENV KUBERNETES_VERSION=v1.33.1
 RUN set -eux; \
     git clone --depth 1 https://github.com/kubernetes/kubernetes.git --branch "${KUBERNETES_VERSION:?}" .; \
     go install -ldflags '-s -w' ./cmd/kubectl-convert
